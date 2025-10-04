@@ -1,13 +1,485 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/index.css">
-  <script src="js/index.js"></script>
-  <title>download.html</title>
+  <title>Profil Pribadi - DerrNotDev</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #000;
+      color: #fff;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #000000 0%, #111111 100%);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px; /* Disesuaikan untuk Navigasi */
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      margin-bottom: 40px;
+      animation: fadeInUp 1s ease;
+      position: relative;
+    }
+
+    /* --- Navigasi Styling --- */
+    nav {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 107, 157, 0.5);
+    }
+
+    .menu-button {
+        background: #FF6B9D;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 15px;
+        cursor: pointer;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        box-shadow: 0 4px 15px rgba(255, 107, 157, 0.6);
+        transition: all 0.3s ease;
+        margin: 0 10px;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .menu-button:hover {
+        background: #FFD4CA;
+        color: #000;
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(255, 212, 202, 0.8);
+    }
+
+    .menu-button.active {
+        background: #FFD4CA;
+        color: #000;
+        cursor: default;
+    }
+    /* ---------------------- */
+
+    .music-control {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #FF6B9D;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: background 0.3s ease;
+    }
+
+    .music-control:hover {
+      background: #e25585;
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 20px rgba(255, 107, 157, 0.8);
+      animation: glowPulse 3s infinite ease-in-out;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 20px rgba(255, 107, 157, 0.6), 0 0 40px rgba(255, 107, 157, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(255, 107, 157, 1), 0 0 80px rgba(255, 107, 157, 0.8); }
+      100% { box-shadow: 0 0 20px rgba(255, 107, 157, 0.6), 0 0 40px rgba(255, 107, 157, 0.4); }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #FF6B9D;
+      text-shadow: 0 0 20px rgba(255, 107, 157, 0.8);
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(90deg, #FF6B9D, #FFD4CA, #FF6B9D);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: neonText 4s linear infinite, slideIn 1.5s ease;
+      transition: transform 0.4s ease, text-shadow 0.4s ease;
+    }
+
+    /* Hover keren */
+    h1:hover {
+      transform: rotate(-3deg) scale(1.1);
+      text-shadow: 0 0 30px rgba(255, 107, 157, 1), 0 0 60px rgba(255, 107, 157, 0.8);
+    }
+
+    /* Klik bounce */
+    h1:active {
+      animation: bounce 0.4s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(1); }
+      30% { transform: scale(0.85); }
+      60% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes neonText {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+
+    .status {
+      font-size: 1.1rem;
+      color: #FFD4CA;
+      margin: 10px 0 0;
+      font-style: italic;
+      animation: fadeIn 2s ease;
+    }
+
+    .bio {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease;
+    }
+
+    section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      animation: fadeInUp 2.5s ease;
+    }
+
+    h2 {
+      color: #FF6B9D;
+      border-bottom: 3px solid #FFD4CA;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(255, 212, 202, 0.8);
+    }
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .contact-item:hover {
+      background: rgba(255, 107, 157, 0.3);
+      box-shadow: 0 0 15px rgba(255, 107, 157, 0.5);
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      margin-right: 20px;
+      border-radius: 50%;
+      background: #FF6B9D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .contact-text {
+      flex: 1;
+    }
+
+    a {
+      text-decoration: none;
+      color: #fff;
+    }
+
+    a:hover {
+      color: #FFD4CA;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Shooting star */
+    .shooting-star {
+      position: fixed;
+      top: -10px;
+      width: 2px;
+      height: 60px;
+      background: linear-gradient(white, transparent);
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: shooting 2s linear forwards;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes shooting {
+      from {
+        transform: translateX(0) translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(600px) translateY(600px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .container { padding: 10px; }
+      header { padding: 20px; }
+      .profile-pic { width: 120px; height: 120px; }
+      .contact { text-align: center; }
+      .menu-button { padding: 10px 15px; margin: 5px; }
+    }
+
+  </style>
 </head>
 <body>
-	<h1>download.html</h1>
+  <canvas id="particles"></canvas>
+  <div class="container">
+    <header>
+      <button class="music-control" onclick="toggleMusic()">▶ Play</button>
+      <img src="https://img1.pixhost.to/images/8670/640112111_zion.jpg" alt="Foto Profil" class="profile-pic">
+      <h1 id="profile-name">DerrNotDev</h1>
+      <p id="profile-status" class="status">saya adalah seorang pelajar yang masih duduk di bangku sma</p>
+      <p id="profile-bio" class="bio">Saya adalah seorang pengembang web yang berfokus pada desain sederhana dan profesional. Saya senang membuat website yang cepat, responsif, dan mudah digunakan.</p>
+
+      <nav>
+          <a href="index.html" class="menu-button active">My Profile</a>
+          <a href="download.html" class="menu-button">Menu Download</a>
+      </nav>
+
+    </header>
+
+    <section>
+      <h2>Tentang Saya</h2>
+      <p id="about-text">Hello, my name is Deri Al Dzikri ,I'm a student focused on programming and web development. I'm interested in creating fast, responsive, and user-friendly websites. I'm learning HTML,CSS, and JavaScript to create attractive and functional displays. My goal is to become a professional developer capable of creating digital solutions that benefit many people..
+      </p>
+    </section>
+
+    <section>
+      <h2>Impian Saya</h2>
+      <p id="dream-text">my dream is to become a cybersecurity expert. I want to protect data, systems, and networks from digital threats. I am interested in learning how cyber attacks work and how to prevent them. With cybersecurity knowledge, I hope to contribute to keeping the digital world safe and trustworthy..
+      </p>
+    </section>
+
+    <section>
+      <h2>Kontak</h2>
+      <div class="contact">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div class="contact-text">
+            <strong>Email:</strong> <a href="mailto:DerrNotDev@gmail.com">DerrNotDev@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div class="contact-text">
+            <strong>WhatsApp:</strong> <a href="https://wa.me/6281617434605" target="_blank">6281617434605</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🔗</div>
+          <div class="contact-text">
+            <strong>LinkedIn:</strong> <a href="#" target="_blank">https://wa.me/6281617434605</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <audio id="bg-music" autoplay loop muted>
+    <source src="https://files.catbox.moe/1mqzox.mp3"  type="audio/mpeg">
+  </audio>
+  <script>
+    function editProfile() {
+      const newName = prompt("Masukkan nama baru:", document.getElementById('profile-name').textContent);
+      if (newName) document.getElementById('profile-name').textContent = newName;
+
+      const newStatus = prompt("Masukkan status baru:", document.getElementById('profile-status').textContent);
+      if (newStatus) document.getElementById('profile-status').textContent = newStatus;
+
+      const newBio = prompt("Masukkan bio baru:", document.getElementById('profile-bio').textContent);
+      if (newBio) document.getElementById('profile-bio').textContent = newBio;
+
+      const newAbout = prompt("Masukkan tentang Anda baru:", document.getElementById('about-text').textContent);
+      if (newAbout) document.getElementById('about-text').textContent = newAbout;
+
+      const newDream = prompt("Masukkan impian baru:", document.getElementById('dream-text').textContent);
+      if (newDream) document.getElementById('dream-text').textContent = newDream;
+    }
+
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.querySelector(".music-control");
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.muted = false;
+        music.play();
+        musicBtn.textContent = "⏸ Pause";
+      } else {
+        music.pause();
+        musicBtn.textContent = "▶ Play";
+      }
+    }
+
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray;
+    let hue = 0;
+
+    class Particle {
+      constructor(x, y, size, speedX, speedY) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.color = `hsl(${hue}, 100%, 60%)`;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        this.color = `hsl(${hue}, 100%, 60%)`;
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      particlesArray = [];
+      for (let i = 0; i < 120; i++) {
+        let size = Math.random() * 3 + 1;
+        let x = Math.random() * canvas.width;
+        let y = Math.random() * canvas.height;
+        let speedX = (Math.random() - 0.5) * 1.5;
+        let speedY = (Math.random() - 0.5) * 1.5;
+        particlesArray.push(new Particle(x, y, size, speedX, speedY));
+      }
+    }
+
+    function connectParticles() {
+      for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a; b < particlesArray.length; b++) {
+          let dx = particlesArray[a].x - particlesArray[b].x;
+          let dy = particlesArray[a].y - particlesArray[b].y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 120) {
+            ctx.strokeStyle = `hsla(${hue}, 100%, 60%, 0.2)`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hue += 0.5;
+      particlesArray.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      connectParticles();
+      requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    // Shooting stars
+    function createStar() {
+      const star = document.createElement("div");
+      star.classList.add("shooting-star");
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = Math.random() * 100 + "px";
+      const size = Math.random() * 2 + 1;
+      star.style.width = size + "px";
+      star.style.height = size * 40 + "px";
+      document.body.appendChild(star);
+      setTimeout(() => { star.remove(); }, 2000);
+    }
+
+    setInterval(() => {
+      for (let i = 0; i < 3; i++) {
+        setTimeout(createStar, i * 300);
+      }
+    }, 1500);
+  </script>
 </body>
 </html>
